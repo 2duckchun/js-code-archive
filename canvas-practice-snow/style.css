@@ -1,0 +1,36 @@
+body {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+}
+
+canvas {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 128, 0.9) 0%,
+    rgba(0, 0, 128, 0.5) 50%,
+    rgba(0, 0, 128, 0.4) 70%
+      /* rgba(0, 169, 217, 0.7) 0%,
+    rgba(0, 169, 217, 0.5) 5%,
+    rgba(0, 169, 217, 0) 70% */
+  );
+}
+/* 255, 204, 204 */
+
+#p {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  z-index: 1;
+}

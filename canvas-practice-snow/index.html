@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="p">
+      <p>일렉트릭 눈송이!!!</p>
+    </div>
+
+    <canvas id="canvas"></canvas>
+  </body>
+  <script>
+    let canvas, ctx, w, h, snows;
+
+    function init() {
+      canvas = document.getElementById("canvas");
+      ctx = canvas.getContext("2d");
+
+      resizeReset();
+      animationLoop();
+    }
+
+    function resizeReset() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+
+      snows = [];
+
+      // 눈송이 갯수
+      for (let i = 0; i < 15; i++) {
+        snows.push(new Snow());
+      }
+    }
+
+    function animationLoop() {
+      ctx.clearRect(0, 0, w, h);
+      drawScene();
+      requestAnimationFrame(animationLoop);
+    }
+
+    function drawScene() {
+      for (let i = 0; i < snows.length; i++) {
+        snows[i].update();
+        snows[i].draw();
+      }
+    }
+
+    function getRandomInt(min, max) {
+      return Math.round(Math.random() * (max - min) + min);
+    }
+
+    class Snow {
+      constructor() {
+        this.reset();
+        this.rgb = "255, 255, 51";
+      }
+
+      reset() {
+        this.x = getRandomInt(0, w);
+        this.xc = 0.1;
+        this.y = getRandomInt(-(h * 0.25), h);
+        this.yc = getRandomInt(10, 15) / 10;
+        this.size = getRandomInt(10, 20) / 10;
+        this.a = getRandomInt(-10, 0) / 10;
+        this.ac = 0.05;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${this.rgb}, ${this.a})`;
+        ctx.stokeStyle = `rgba(${this.rgb}, ${this.a})`;
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      update() {
+        this.x += this.xc;
+        this.y += this.yc;
+        this.a += this.ac;
+        // 눈송이 리젠 속도
+        if (this.a > 10) {
+          this.ac += -1;
+        } else if (this.a < 0 && this.ac < 0) {
+          this.reset();
+        }
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", init);
+    window.addEventListener("resize", resizeReset);
+  </script>
+</html>
